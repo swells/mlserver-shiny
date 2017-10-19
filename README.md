@@ -1,7 +1,7 @@
 Using MLServer Python services within Shiny
 ================
 
-Integrating remote Microsoft Machine Learning Server (MLServer) R or Python web services within R Shiny is easy via the [mrsdeploy](https://docs.microsoft.com/en-us/machine-learning-server/r-reference/mrsdeploy/mrsdeploy-package) R package.
+Integrating Microsoft Machine Learning Server (MLServer) R or Python remote web services within R Shiny is easy via the [mrsdeploy](https://docs.microsoft.com/en-us/machine-learning-server/r-reference/mrsdeploy/mrsdeploy-package) R package.
 
 This blog post explains the details using a contrived Shiny example in order to emphasize:
 
@@ -9,14 +9,16 @@ This blog post explains the details using a contrived Shiny example in order to 
 -   Ease of service consumption using *remote* function calls from [mrsdeploy](https://docs.microsoft.com/en-us/machine-learning-server/r-reference/mrsdeploy/mrsdeploy-package)
 -   Return file artifacts generated in Python and displayed in R
 
-> Please find the full [example source](#example-app) used within this post [here](https://github.com/swells/mlserver-shiny).
+The result is a simple Shiny app that [resembles this UI](https://user-images.githubusercontent.com/1356351/31786143-4daf202e-b4bc-11e7-9d30-3828cf17b9d6.png) which invokes already deployed Python services [car-service](#car-service) and [realtime-rating-service](#realtime-rating-service) on a MLServer for data. The end goal is to demonstrate the ease of integrating Microsoft Machine Learning Server R and Python remote web services into a Shiny application.
+
+> **NOTE** For more context, it might be helpful to first review the two [Python services](#python-services) used in this example. In addition, please find the full example source used within this post [here](https://github.com/swells/mlserver-shiny).
 
 Service Integration
 -------------------
 
 All MLServer invocations require authentication. Rather than introducing a complex frontend authentication workflow, this example will simply hardcode the credentials within the `app.R` file before the Shiny `ui` and `server` contexts such that it executes on application startup. If you choose to run the example yourself, please remember to first substitute in the `{{MLSERVER_HOST}}`, `{{USERNAME}}`, and `{{PASSWORD}}` values as shown below.
 
-MLServer supports both Azure Active Directory (Azure AD) and Active Directory (AD) authentication. As a result, one could easily envision a more robust user experience in *production* that supports a Shiny-powered UI control for a secure AD *username/password* authentication or even an hook into an Azure AD workflow within your single-page app. For the sake of simplicity, a more robust frontend authentication workflow is left as an exercise for the reader.
+MLServer supports both Azure Active Directory (Azure AD) and Active Directory (AD) authentication. As a result, one could easily envision a more robust user experience in *production* that supports a Shiny-powered UI control for a secure AD *username/password* authentication or even a hook into an Azure AD workflow within your single-page app. For the sake of simplicity, a more robust frontend authentication workflow is left as an exercise for the reader.
 
 #### Authentication
 
@@ -259,6 +261,8 @@ Python Services
 ---------------
 
 Starting with Microsoft Machine Learning Server (MLServer) `9.3.0` full Python support was introduced including a client Python package [azureml-model-management-sdk](https://docs.microsoft.com/en-us/machine-learning-server/python-reference/azureml-model-management-sdk/azureml-model-management-sdk) containing equivalent service deployment workflow as `mrsdeploy` in R.
+
+> Please see the complete [jupyter notebook](https://github.com/swells/mlserver-shiny/tree/master/assets) to run these python services
 
 #### car-service
 
